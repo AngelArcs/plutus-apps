@@ -20,6 +20,7 @@ import Data.Function ((&))
 import Data.Yaml qualified as Y
 import Options.Applicative (execParser)
 import Prettyprinter (Pretty (..))
+import System.IO (BufferMode (LineBuffering), hSetBuffering, stderr, stdout)
 
 import Cardano.BM.Configuration.Model qualified as CM
 
@@ -33,6 +34,9 @@ import Plutus.ChainIndex.Server qualified as Server
 
 main :: IO ()
 main = do
+  hSetBuffering stdout LineBuffering
+  hSetBuffering stderr LineBuffering
+
   -- Parse comand line arguments.
   cmdConfig@AppConfig{acLogConfigPath, acConfigPath, acMinLogLevel, acCommand, acCLIConfigOverrides} <- execParser cmdWithHelpParser
 
